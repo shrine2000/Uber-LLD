@@ -5,8 +5,16 @@ from ridesharing.model.driver import Driver
 from ridesharing.model.enums import TripStatus, RideType
 from ridesharing.observer.trip_observer import TripObserver
 
+
 class Trip:
-    def __init__(self, trip_id: str, rider: Rider, pickup: Location, dropoff: Location, ride_type: RideType):
+    def __init__(
+        self,
+        trip_id: str,
+        rider: Rider,
+        pickup: Location,
+        dropoff: Location,
+        ride_type: RideType,
+    ):
         self.id = trip_id
         self.rider = rider
         self.pickup = pickup
@@ -16,7 +24,7 @@ class Trip:
         self.status = TripStatus.REQUESTED
         self.fare: float = 0.0
         self.observers: List[TripObserver] = []
-        
+
         self.add_observer(rider)
 
     def add_observer(self, observer: TripObserver) -> None:
@@ -47,7 +55,7 @@ class Trip:
             self.status = TripStatus.COMPLETED
             self.fare = fare
             self.notify_observers()
-            
+
             self.rider.add_trip_to_history(self)
             if self.driver:
                 self.driver.add_trip_to_history(self)
