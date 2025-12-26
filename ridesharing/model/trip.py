@@ -17,7 +17,6 @@ class Trip:
         self.fare: float = 0.0
         self.observers: List[TripObserver] = []
         
-        # Add rider as observer by default
         self.add_observer(rider)
 
     def add_observer(self, observer: TripObserver) -> None:
@@ -49,7 +48,6 @@ class Trip:
             self.fare = fare
             self.notify_observers()
             
-            # Add to history
             self.rider.add_trip_to_history(self)
             if self.driver:
                 self.driver.add_trip_to_history(self)

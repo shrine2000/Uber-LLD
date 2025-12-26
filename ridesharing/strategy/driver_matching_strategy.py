@@ -19,6 +19,5 @@ class NearestDriverMatchingStrategy(DriverMatchingStrategy):
                 if driver.current_location.distance_to(pickup) <= self.MAX_DISTANCE_KM:
                     available_drivers.append(driver)
         
-        # Sort by distance
         available_drivers.sort(key=lambda d: d.current_location.distance_to(pickup))
         return available_drivers

@@ -40,11 +40,9 @@ class TripManager:
             self.drivers.append(driver)
 
     def request_trip(self, rider: Rider, pickup: Location, dropoff: Location, ride_type: RideType) -> Optional[Trip]:
-        # Create new trip
         trip_id = str(uuid.uuid4())
         trip = Trip(trip_id, rider, pickup, dropoff, ride_type)
         
-        # Find available drivers
         available_drivers = self.matching_strategy.find_drivers(self.drivers, pickup, ride_type)
         
         if not available_drivers:
@@ -52,12 +50,10 @@ class TripManager:
             trip.cancel_trip()
             return None
         
-        # Assign first available driver
         driver = available_drivers[0]
         driver.status = DriverStatus.IN_TRIP
         trip.assign_driver(driver)
         
-        # Calculate fare
         fare = self.pricing_strategy.calculate_fare(pickup, dropoff, ride_type)
         trip.fare = fare
         
